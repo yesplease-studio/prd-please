@@ -34,6 +34,8 @@ Executable single-step workflows. Each has a `SKILL.md` that Claude reads before
 | `prd-taskmaster` | Derive executable tasks and client-facing views from a Strategic PRD |
 | `prd-validator` | Validate implementation against PRD requirements and guardrails |
 | `prd-learner` | Capture implementation learnings and propose PRD amendments |
+| `prd-to-aldente` | Translate a Strategic PRD into Al Dente build documentation |
+| `build-learner` | Capture build-phase learnings and propose amendments upstream or laterally |
 
 ### Workflows
 
@@ -43,6 +45,7 @@ Multi-step skill sequences defined in YAML. They chain skills together with cond
 |----------|-------------|
 | `prd-new-engagement` | Author a PRD, get approval, generate tasks |
 | `prd-post-build` | Validate, learn, amend, regenerate tasks |
+| `prd-aldente-quickstart` | Author a PRD with Al Dente defaults, translate to build docs, generate tasks |
 
 ### Company profiles
 
@@ -61,6 +64,24 @@ systems/prd/SYSTEM.md
     ↓ composed into
 workflows/<workflow>.yaml
 ```
+
+## Setup paths
+
+### Path A: Standalone (PRD system only)
+
+Use the PRD system on its own for any product or project. No build system dependency. Follow the quick start below.
+
+### Path B: PRD + Al Dente (SaaS build integration)
+
+Combine Systems Please with [Al Dente](https://github.com/aline-no/aldente) for a full pipeline from requirements to SaaS implementation. Systems Please handles *what to build*; Al Dente handles *how to build it*.
+
+1. Follow the quick start below to set up Systems Please.
+2. Clone Al Dente alongside: `git clone https://github.com/aline-no/aldente.git`
+3. Use the combined workflow: run `/prd-aldente-quickstart` to author a PRD with Al Dente's default stack (React + Vite + Tailwind + Supabase + Stripe), translate it into Al Dente's build docs, and generate your task backlog — all in one flow.
+
+You can start with Path A and add Al Dente later. The `prd-to-aldente` skill can translate any existing PRD into Al Dente docs at any time.
+
+---
 
 ## Quick start
 
@@ -125,9 +146,11 @@ skills/            Executable workflows (one SKILL.md each)
   prd-taskmaster/    Derive tasks from PRDs
   prd-validator/     Validate implementation against PRDs
   prd-learner/       Capture learnings and amend PRDs
+  prd-to-aldente/    Translate PRDs into Al Dente build docs
+  build-learner/     Capture build-phase learnings
 
 workflows/         Multi-step YAML sequences
-  product/           PRD workflows
+  product/           PRD workflows + Al Dente integration
 
 companies/         Company profiles
   _template/         Scaffold for new companies

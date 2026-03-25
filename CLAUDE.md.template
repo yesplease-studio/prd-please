@@ -43,6 +43,14 @@ Propose a specific, minimal edit. Wait for approval before applying.
 
 When the active company has skills in `companies/<company>/skills/`, those skills are available alongside the domain skills in `skills/`. If a company-specific skill has the same name as a domain skill, the company-specific version takes precedence.
 
+### Integration skills (optional)
+
+If using the Al Dente build system integration:
+
+- `prd-to-aldente` — Translate a completed Strategic PRD into Al Dente's 7 documentation templates. Run after PRD approval, before starting build phases.
+- `build-learner` — Capture implementation learnings during build phases. Proposes amendments upstream (to the PRD) or laterally (to the build docs).
+- Workflow: `workflows/product/prd-aldente-quickstart.yaml` — Combined flow: author PRD with Al Dente defaults → translate → generate tasks.
+
 ### Systems reference
 
 | System | Definition |

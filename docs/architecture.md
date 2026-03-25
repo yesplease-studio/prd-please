@@ -30,6 +30,8 @@ Skills are `SKILL.md` files — self-contained executable specifications that Cl
 | `prd-taskmaster` | Derive executable tasks and client-facing views from a Strategic PRD |
 | `prd-validator` | Validate implementation against PRD requirements and guardrails |
 | `prd-learner` | Capture implementation learnings and propose PRD amendments |
+| `prd-to-aldente` | Translate a Strategic PRD into Al Dente build documentation |
+| `build-learner` | Capture build-phase learnings and propose amendments upstream or laterally |
 
 **What stays in a skill:** format, structure, process steps, quality standards, self-check.
 
@@ -120,3 +122,38 @@ CLAUDE.md sets the active company — it's workspace-specific. Committing it wou
 ### Why workflows are YAML, not code
 
 YAML is human-readable, version-controllable, and Claude interprets it directly. No runtime, no dependencies, no build step.
+
+---
+
+## Integration with build systems
+
+Systems Please owns *what to build*. Build systems (like [Al Dente](https://github.com/aline-no/aldente)) own *how to build it*. The integration boundary is clean: a translation skill maps PRD artifacts into the build system's expected format, and a learning skill feeds implementation experience back upstream.
+
+### The integration flow
+
+```
+Strategic PRD (active)
+        ↓
+   prd-to-aldente skill
+   Translates PRD sections → 7 Al Dente doc templates
+        ↓
+Al Dente docs/ (content-pages, journeys, ui-structure,
+   data-models, schema, design-guidelines, assets)
+        ↓
+Al Dente build phases (01-setup → 11-launch-audit)
+        ↓
+   build-learner skill
+   Captures implementation learnings
+        ↓
+   Amendments flow to:
+   ├── Upstream → Strategic PRD (via prd-author)
+   ├── Lateral → Al Dente docs (direct edit)
+   └── Flagged → Al Dente build guides (for maintainer)
+```
+
+### Design principles for integration
+
+- **Translation, not coupling.** The `prd-to-aldente` skill generates self-contained documents. Al Dente never reads the PRD directly; the translation skill is the only point of contact.
+- **Bidirectional learning.** The `build-learner` skill feeds learnings both upstream (improving the PRD) and laterally (improving the build docs), closing the loop in both directions.
+- **Optional integration.** The PRD system works standalone without any build system. The Al Dente integration is an additive layer, not a dependency.
+- **Overridable defaults.** When using the quick-start workflow, Al Dente's default stack (React, Supabase, Stripe, etc.) is presented as suggestions during the PRD authoring phase. The user can override any default based on their project's needs.

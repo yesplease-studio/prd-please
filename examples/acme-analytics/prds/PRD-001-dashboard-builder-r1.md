@@ -103,6 +103,17 @@ James, the data engineer who set up Acme, notices PMs are building dashboards wi
 **Scenario C — Executive reviews weekly metrics:**
 The CEO bookmarks the "Company KPIs" dashboard link Sarah shared. Every Monday morning, she opens the link. The dashboard loads with current data (refreshed overnight). She sees DAU trending up, retention flat, and funnel conversion improving. She screenshots the retention chart and pastes it into the board update doc.
 
+### Buyer Journey
+
+Acme Analytics is an external product sold to product and data teams. The dashboard builder shapes the buyer journey at several stages:
+
+- **Unaware → Problem-aware:** Product teams feel the pain of waiting on data engineers for dashboards. They search for "self-serve product analytics" or hear about Acme from a data engineer peer.
+- **Evaluating:** The data engineer (champion) evaluates Acme's warehouse-native approach. The dashboard builder is a key differentiator — prospects consistently flag the lack of a no-code interface as a blocker for team-wide adoption (see Section 1, problem #3). During evaluation, the champion needs to demo Acme to PMs, and the visual builder is the demo moment.
+- **Onboarding:** The champion sets up the warehouse connection and defines core metrics. The PM creates their first dashboard using the visual builder within the first week. This is the activation event — if the PM doesn't build a dashboard in 30 days, the account is at risk.
+- **Active:** PMs create dashboards weekly, replacing ad hoc Slack requests to the data team. The champion's workload drops. Dashboard count per account is the leading indicator of account health.
+- **Expanding:** The PM shares dashboards with executives and cross-functional partners. Dashboard viewers become new users. The account hits the free-tier dashboard limit and upgrades to a paid plan.
+- **Graduating/Churning:** Accounts that outgrow Acme's visual builder (need custom visualizations, real-time streaming, embedded analytics) are candidates for R2 features or graceful graduation to an enterprise plan. Accounts where the champion leaves and no PM adopted self-serve are churn risks.
+
 ---
 
 ## 4. Solution Overview
@@ -171,6 +182,14 @@ Dashboards store configuration, not cached results. Every load executes fresh qu
 | DES-02 | must | Dashboard canvas is responsive down to 1024px viewport width | All charts remain readable and interactive at 1024px; no horizontal scrolling | R1 |
 | DES-03 | should | Chart types include: line, bar, area, table, single number | Each chart type renders correctly with sample data | R1 |
 | DES-04 | should | Dashboard has a presentation mode (full-screen, no chrome) for meetings | Clicking "Present" hides navigation and edit controls; ESC exits | R1 |
+
+### 5.5 GTM
+
+| ID | Severity | Requirement | Acceptance Criteria | Phase |
+|----|----------|-------------|---------------------|-------|
+| GTM-01 | must | Free tier includes the visual dashboard builder with a limit of 3 dashboards per account | Free-tier user can create up to 3 dashboards; attempting a 4th shows upgrade prompt with plan comparison | R1 |
+| GTM-02 | should | Dashboard builder is positioned as the primary onboarding entry point for non-technical users | New non-SQL users see "Create a Dashboard" as the first suggested action after onboarding; onboarding email sequence highlights the visual builder | R1 |
+| GTM-03 | should | In-product upgrade prompt when free-tier dashboard limit is reached | Prompt shows current plan, dashboard limit, and a clear upgrade path; does not block viewing existing dashboards | R1 |
 
 ---
 

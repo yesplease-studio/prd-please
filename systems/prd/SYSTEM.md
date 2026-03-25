@@ -117,6 +117,10 @@ Background, current state, and a concise articulation of what is wrong or missin
 - **User roles** — Primary and secondary users with brief descriptions.
 - **User stories** — Atomic stories with IDs, role, phase tag, and priority. Format: `US-01 (Role, R1, MUST): As a [role], I want [action] so that [outcome].`
 - **Key scenarios** — 2-3 narrative walkthroughs showing how users interact with the product end-to-end.
+- **Buyer or stakeholder journey** (when applicable) — Maps the lifecycle beyond product usage. Which variant applies depends on context:
+  - **External products** — Buyer journey stages: *Unaware → Problem-aware → Evaluating → Onboarding → Active → Expanding → Graduating/Churning*. For each relevant stage: who is involved (buyer, champion, end user), what they need, how the product shows up, and what triggers progression to the next stage. This captures the commercial lifecycle that shapes GTM requirements in Section 5.
+  - **Internal tools** — Stakeholder journey stages: *Need identified → Build-vs-buy evaluated → Sponsored → Rolled out → Adopted → Maintained*. For each relevant stage: who owns the decision, what tools the product replaces, how value is justified, and what the long-term maintenance model looks like. This captures the organizational lifecycle that shapes internal GTM requirements in Section 5.
+  - Not every PRD needs this. Skip it for purely technical modules, infrastructure work, or features with no commercial or stakeholder dimension.
 
 **Section 4: Solution Overview**
 
@@ -141,10 +145,12 @@ This is the core of the PRD. Requirements are organized by **domain subsections*
 | **Data** | Data models, pipelines, privacy, analytics | "PII must be encrypted at rest" |
 | **Design** | UI/UX patterns, accessibility, visual standards | "All interactive elements meet WCAG AA" |
 | **AI** | Agent behavior, prompts, guardrails, evaluation | "Agent must not fabricate data points" |
-| **GTM** | Pricing, positioning, onboarding, commercial | "Free tier limited to 3 projects" |
+| **GTM** | **External:** Market & ICP, pricing strategy & packaging, buyer journey requirements, sales motion (self-serve / PLG / sales-led), positioning & messaging. **Internal:** Stakeholders & owners, tools replaced & migration path, build-vs-buy justification, maintenance model, integration surface with existing tools. | "Free tier limited to 3 projects" / "Replaces manual Sheets workflow for ops team" |
 | **General** | Cross-cutting conventions, documentation, processes | "All API endpoints must have OpenAPI specs" |
 
 **The domain structure serves as a forcing function.** Even if the initial input material only discusses product features, the `prd-author` skill should prompt the human to consider tech constraints, data implications, design standards, and commercial considerations.
+
+**GTM is context-dependent.** The `prd-author` interview determines whether the product is external (sold to customers) or internal (built for the team), and applies the corresponding GTM sub-context. GTM is optional — purely technical modules, infrastructure work, and features without a commercial or stakeholder dimension can omit it entirely.
 
 **Section 6: Guardrails**
 

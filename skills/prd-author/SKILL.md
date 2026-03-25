@@ -67,6 +67,12 @@ Use `AskUserQuestion` to fill gaps and confirm direction. Batch questions into 2
 
 This is one of the system's most important mechanisms — it ensures senior product thinking regardless of the author's experience.
 
+**Commercial context probe:** In addition to domain forcing, determine the commercial context early. Ask a gating question: *"Is this an external product sold to customers, or an internal tool for your organization?"*
+
+- **If external:** Probe for commercial dimensions: "Who buys this — not just who uses it? How do they discover it? What's the pricing model? What sales motion do you envision — self-serve, product-led growth, sales-led? What does the buyer journey look like before someone becomes a user?" These answers shape GTM requirements in Section 5 and the buyer journey in Section 3.
+- **If internal:** Probe for stakeholder dimensions: "Who sponsors this internally? What does it replace? What's the maintenance plan after launch? Who supports it day-to-day? What's the build-vs-buy case — why build this rather than buy off the shelf?" These answers shape GTM requirements in Section 5 and the stakeholder journey in Section 3.
+- **If not applicable** (purely technical module, infrastructure, or the human says "skip"): Omit GTM from the PRD.
+
 **If the human provides a URL:** Use `WebFetch` to retrieve and incorporate the content.
 
 **If extending an existing product:** Read existing PRDs (`depends_on` candidates) and reference them in the interview to check for conflicts or shared requirements.
@@ -82,6 +88,7 @@ Context: [1-2 sentence summary of the problem]
 Goals (R1): [Bullet list of 3-5 primary goals]
 Non-goals: [Bullet list of what's explicitly excluded]
 Users: [Primary and secondary user roles]
+Commercial context: [external / internal / not applicable] — [1-line summary]
 Solution approach: [1-2 sentence summary]
 Domains covered: [List which domain subsections will be included]
 Key risks: [1-2 top risks]
@@ -101,7 +108,7 @@ Write the complete Strategic PRD following the 8-section structure defined in th
 
 **Section 2 (Goals, Non-goals & Success Metrics):** Every goal should be tied to a phase. Non-goals are mandatory — if the human didn't specify any, propose them based on scope signals. Success metrics should be measurable where possible; qualitative is acceptable when quantitative isn't realistic.
 
-**Section 3 (Users & Scenarios):** User stories follow the format: `US-01 (Role, Phase, Severity): As a [role], I want [action] so that [outcome].` Include 2-3 narrative scenarios that walk through end-to-end usage.
+**Section 3 (Users & Scenarios):** User stories follow the format: `US-01 (Role, Phase, Severity): As a [role], I want [action] so that [outcome].` Include 2-3 narrative scenarios that walk through end-to-end usage. If the commercial context probe identified this as an external product, add a **Buyer Journey** subsection mapping the stages from unaware through churning/graduating — who is involved at each stage, what triggers progression. If internal, add a **Stakeholder Journey** mapping the organizational lifecycle from need identification through ongoing maintenance.
 
 **Section 4 (Solution Overview):** Architecture-level, not implementation-level. Name components, services, and integrations. A builder reading this should understand the shape of the system before seeing detailed requirements.
 
@@ -112,6 +119,7 @@ Write the complete Strategic PRD following the 8-section structure defined in th
 - Be prescriptive: "API must return paginated results with max 50 items per page" not "API should handle large datasets."
 - Cross-reference user stories where applicable.
 - Include only domains that are genuinely relevant. A simple CRUD app doesn't need a GTM section.
+- **GTM domain guidance:** If external, GTM requirements should cover: pricing tiers and limits, free-tier boundaries, trial mechanics, onboarding conversion targets, positioning statements that the product must support. If internal, GTM requirements should cover: migration steps from the tool being replaced, training requirements, rollback plan, SLA expectations, ownership and support model. If the commercial context probe returned "not applicable," omit GTM.
 
 **Section 6 (Guardrails):** These are the do's and don'ts. They must be:
 

@@ -116,3 +116,4 @@ or: "What did we learn from this sprint? Update the PRD."
 - **Humans decide, AI executes.** Humans provide vision and approval. AI handles authoring, decomposition, validation, and learning capture.
 - **Every mistake becomes a rule.** The learning mechanism (`prd-learner` → `prd-author`) ensures implementation failures get codified back into the PRD.
 - **Token efficiency.** Agents building features load focused task contexts, not full PRDs.
+- **Commercial context is first-class.** The GTM domain covers both external products (market, ICP, pricing, buyer journey, sales motion) and internal tools (stakeholders, build-vs-buy, maintenance model). Which sub-context applies is determined during the `prd-author` interview phase.

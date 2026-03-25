@@ -1,0 +1,86 @@
+name: prd-aldente-quickstart
+description: |
+  Quick-start workflow for PRD + Al Dente integration. Authors a Strategic PRD
+  with Al Dente's default stack pre-populated as overridable suggestions, translates
+  the approved PRD into Al Dente's 7 documentation templates, and generates the
+  initial task backlog. Use this when building a SaaS product with the Al Dente
+  boilerplate and want a seamless path from requirements to build-ready docs.
+
+company: active
+context_files:
+  - companies/{{company}}/COMPANY.md
+
+context:
+  prd_id: "PRD-XXX"               # Set before running
+  target_phase: "R1"               # Phase to generate tasks for
+  aldente_path: ""                  # Path to Al Dente project (optional)
+
+tech_defaults:
+  # Al Dente's recommended stack. Presented as overridable suggestions during
+  # the prd-author interview — not hard constraints. The user can replace any
+  # or all of these based on their PRD's requirements.
+  frontend: "React + Vite + Tailwind CSS + shadcn/ui"
+  backend: "Supabase (PostgreSQL, Auth, Storage, Edge Functions)"
+  payments: "Stripe"
+  hosting: "Vercel"
+  email: "Resend"
+
+steps:
+  - id: author-prd
+    skill: prd-author
+    inputs:
+      mode: create
+      tech_defaults: "{{tech_defaults}}"
+    output: "companies/{{company}}/prds/{{context.prd_id}}.md"
+    notes: |
+      Interactive step. Same as prd-new-engagement but with Al Dente defaults
+      pre-populated. During the interview phase, prd-author presents the defaults:
+
+        "Al Dente's default stack is React + Vite + Tailwind + shadcn/ui for
+        frontend, Supabase for backend/auth/storage, and Stripe for payments.
+        Would you like to use these defaults, or do you have a different stack
+        in mind?"
+
+      The user can override any default. Overrides flow into TECH requirements
+      in Section 5. If the user accepts defaults, TECH requirements reference
+      the specific technologies.
+
+  - id: human-approval
+    skill: none
+    condition: "{{steps.author-prd.output != null}}"
+    notes: |
+      APPROVAL GATE — Human reviews the draft PRD. Check that:
+      - Tech stack decisions (defaults or overrides) are captured in TECH requirements
+      - GTM/commercial context is addressed (or explicitly marked N/A)
+      - All sections are complete enough for translation to build docs
+      Update PRD status from draft → active on approval.
+
+  - id: translate-to-aldente
+    skill: prd-to-aldente
+    inputs:
+      prd: "{{steps.author-prd.output}}"
+      company_profile: "companies/{{company}}/COMPANY.md"
+      aldente_path: "{{context.aldente_path}}"
+      apply_defaults: true
+    output: "{{context.aldente_path}}/docs/"
+    condition: "{{steps.human-approval.approved}}"
+    notes: |
+      Translates the approved PRD into Al Dente's 7 documentation templates.
+      If aldente_path is set, writes directly into the Al Dente project's docs/
+      folder. Otherwise writes to outputs/aldente-docs/ within this workspace.
+
+      The apply_defaults flag tells prd-to-aldente to pre-populate Al Dente's
+      technology choices in the generated templates (marked with override comments).
+
+  - id: generate-tasks
+    skill: prd-taskmaster
+    inputs:
+      prd: "{{steps.author-prd.output}}"
+      phase: "{{context.target_phase}}"
+    output: "outputs/{{name}}-{{date}}/task-backlog.md"
+    condition: "{{steps.translate-to-aldente.output != null}}"
+    notes: |
+      Generates the task backlog from the approved PRD. Tasks are organized
+      by phase and priority. When used with Al Dente, tasks naturally align
+      with Al Dente's build phases (setup → layouts → structure → data →
+      integration → payments → auth → design → launch).

@@ -19,9 +19,13 @@ Your company context (product, users, constraints) is in `COMPANY.md` at the roo
 - **prd-validator** — Validate implementation against PRD requirements and guardrails
 - **prd-learner** — Capture implementation learnings and propose PRD amendments
 
+### Integration (optional)
+- **prd-to-aldente** — Translate a Strategic PRD into Al Dente build documentation
+- **build-learner** — Capture build-phase learnings and propose amendments upstream or laterally
+
 ## Workflows
 
-Check `workflows/product/` for multi-step PRD sequences (new engagement, post-build validation).
+Check `workflows/product/` for multi-step PRD sequences (new engagement, post-build validation, Al Dente quick-start).
 
 ## Improving skills
 
