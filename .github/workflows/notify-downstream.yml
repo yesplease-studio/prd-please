@@ -1,0 +1,16 @@
+name: Notify downstream on push
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger vault submodule update
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.VAULT_DISPATCH_TOKEN }}
+          repository: yesplease-studio/yesplease.studio
+          event-type: upstream-update
