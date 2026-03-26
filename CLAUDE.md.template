@@ -1,0 +1,65 @@
+# Systems Please
+
+Always use and write in American English.
+
+## Active company
+
+company: {{COMPANY_NAME}}
+profile: companies/{{COMPANY_NAME}}/COMPANY.md
+
+## How this system works
+
+This is the Systems Please operating system. It contains methodology definitions (systems), executable workflows (skills), company profiles (companies), and composed sequences (workflows).
+
+### Directory layout
+
+- `systems/` — Methodology definitions. Load when reasoning about approach matters.
+- `skills/` — Executable workflows. Flat directory, each subdirectory has a SKILL.md.
+- `companies/` — Company profiles with product context. Load the active company's profile before executing any company-facing skill.
+- `workflows/` — Composed skill sequences for recurring cadences.
+
+### Before executing any company-facing skill
+
+1. Read `companies/{{COMPANY_NAME}}/COMPANY.md` for company context.
+2. Read the relevant system definition:
+   - PRD skills → `systems/prd/SYSTEM.md`
+3. Check if `companies/{{COMPANY_NAME}}/skills/` contains a company-specific version of the triggered skill. If it does, use that version instead of the domain skill.
+4. Check `companies/{{COMPANY_NAME}}/integrations.md` for available tool connections. Adapt skill behavior based on what integrations are available.
+
+### If no company profile is loaded
+
+Ask the user which company they are working for before proceeding. Do not guess.
+
+### When a skill produces suboptimal output
+
+Identify whether the issue is in:
+- The **skill** (format, structure, process) → edit `skills/<skill>/SKILL.md`
+- The **system** (methodology, principles) → edit `systems/<system>/SYSTEM.md`
+- The **company profile** (product, users, constraints) → edit `companies/<company>/COMPANY.md`
+
+Propose a specific, minimal edit. Wait for approval before applying.
+
+### Company-specific skills
+
+When the active company has skills in `companies/<company>/skills/`, those skills are available alongside the domain skills in `skills/`. If a company-specific skill has the same name as a domain skill, the company-specific version takes precedence.
+
+### Systems reference
+
+| System | Definition |
+|--------|-----------|
+| PRD | `systems/prd/SYSTEM.md` |
+
+### Workflow execution
+
+When running a workflow from `workflows/`:
+1. Load the workflow YAML definition.
+2. Execute steps sequentially, passing outputs between steps as specified.
+3. After each step completes, save the output to the specified location.
+4. If a step fails, save a checkpoint note to `outputs/.checkpoint.md` describing completed steps and their output locations. This allows manual resume.
+
+### Improvement conventions
+
+- Every skill improvement is a Git commit with a clear message.
+- Format: `<skill-name>: <what changed>` (e.g., `prd-author: add domain forcing for AI requirements`)
+- System changes: `prd: <what changed>`
+- Company profile changes: `<company>: <what changed>`

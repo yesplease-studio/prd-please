@@ -1,0 +1,67 @@
+name: prd-post-build
+description: |
+  Post-build review — validate implementation, capture learnings,
+  apply approved amendments to the PRD, and regenerate affected tasks.
+  This workflow has a human approval gate between learning capture
+  and PRD amendment.
+
+company: active
+context_files:
+  - companies/{{company}}/COMPANY.md
+  - companies/{{company}}/prds/{{context.prd_id}}.md
+
+steps:
+  - id: validate
+    skill: prd-validator
+    inputs:
+      prd: "companies/{{company}}/prds/{{context.prd_id}}.md"
+      # task_id: "{{context.task_id}}"          # optional: validate a specific task
+      # changed_files: "{{context.changed_files}}" # optional: scope to specific files
+    output: "outputs/{{workflow}}-{{date}}/validation-report.md"
+    notes: |
+      Checks implementation against PRD requirements, acceptance criteria,
+      and guardrails. Produces a compliance report with PASS/FAIL per domain.
+
+  - id: capture-learnings
+    skill: prd-learner
+    inputs:
+      prd: "companies/{{company}}/prds/{{context.prd_id}}.md"
+      validation_report: "{{steps.validate.output}}"
+    output: "outputs/{{workflow}}-{{date}}/learning-report.md"
+    notes: |
+      Reviews validation results and session history.
+      Proposes specific PRD amendments (new guardrails, tightened requirements,
+      new requirements) with learning entries for Section 8.
+
+  - id: human-approval
+    skill: none
+    condition: "{{steps.capture-learnings.output != null}}"
+    notes: |
+      APPROVAL GATE — Human reviews proposed amendments.
+      May approve all, approve some, or reject with feedback.
+      Only approved amendments proceed to the next step.
+
+  - id: apply-amendments
+    skill: prd-author
+    inputs:
+      mode: edit
+      prd: "companies/{{company}}/prds/{{context.prd_id}}.md"
+      amendments: "{{steps.capture-learnings.output}}"
+    output: "companies/{{company}}/prds/{{context.prd_id}}.md"
+    condition: "{{steps.human-approval.approved}}"
+    notes: |
+      prd-author applies the approved amendments in edit mode.
+      Surgical edits only — unchanged sections are preserved.
+      Produces a change summary listing affected requirements.
+
+  - id: regenerate-tasks
+    skill: prd-taskmaster
+    inputs:
+      prd: "{{steps.apply-amendments.output}}"
+      change_summary: "{{steps.apply-amendments.change_summary}}"
+    output: "outputs/{{workflow}}-{{date}}/updated-tasks.md"
+    condition: "{{steps.apply-amendments.output != null}}"
+    notes: |
+      Regenerates task contexts affected by the PRD amendment.
+      Only tasks referencing changed requirements or guardrails are updated.
+      Produces a summary of which tasks changed and why.

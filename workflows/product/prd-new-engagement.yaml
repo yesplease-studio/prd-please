@@ -1,0 +1,45 @@
+name: prd-new-engagement
+description: |
+  New client engagement — author a Strategic PRD, get human approval,
+  then decompose into executable tasks and a client-facing view.
+  This workflow is interactive: it requires human input during authoring
+  and an approval gate before task generation.
+
+company: active
+context_files:
+  - companies/{{company}}/COMPANY.md
+
+steps:
+  - id: author-prd
+    skill: prd-author
+    inputs:
+      mode: create
+      # Provide any combination of source material:
+      # transcript: "{{context.transcript}}"
+      # client_docs: "{{context.client_docs}}"
+      # existing_prds: "{{context.existing_prds}}"
+    output: "companies/{{company}}/prds/{{context.prd_id}}.md"
+    notes: |
+      Interactive step. prd-author works conversationally in 5 phases:
+      gather input → interview → outline → author → present.
+      The PRD is saved with status: draft.
+
+  - id: human-approval
+    skill: none
+    condition: "{{steps.author-prd.output != null}}"
+    notes: |
+      APPROVAL GATE — Human reviews the draft PRD.
+      On approval: update PRD status from draft → active, then continue.
+      On rejection: return to author-prd with feedback.
+
+  - id: generate-tasks
+    skill: prd-taskmaster
+    inputs:
+      prd: "{{steps.author-prd.output}}"
+      phase: "{{context.target_phase}}"
+    output: "outputs/{{workflow}}-{{date}}/task-backlog.md"
+    condition: "{{steps.human-approval.approved}}"
+    notes: |
+      Decomposes the active PRD into buildable tasks.
+      Produces task definitions (agent-facing) and execution view (client-facing).
+      Present to human for final approval before tasks go to kanban.

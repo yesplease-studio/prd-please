@@ -1,0 +1,39 @@
+# Workflow template
+# Copy this file and fill in the fields to create a new workflow.
+# Workflows are executed by the schedule skill, which reads this YAML
+# and runs steps sequentially, passing outputs between steps.
+
+name: workflow-name                  # kebab-case, matches filename
+description: |
+  What this workflow produces and when to run it.
+  One or two sentences.
+
+schedule: "0 8 * * MON"             # Cron expression. Leave blank for manual-only.
+company: active                      # "active" = use CLAUDE.md active company, or specify name
+
+# Files loaded once, shared across all steps
+context_files:
+  - companies/{{company}}/COMPANY.md
+  # Add sprint context, config files, or other shared inputs:
+  # - companies/{{company}}/workflows/sprint-context.md
+
+steps:
+  - id: step-one
+    skill: skill-name                # Matches a subdirectory in skills/
+    inputs:
+      # Pass values to the skill. Use {{context.*}} for values from context_files,
+      # {{steps.<id>.output}} to chain from a previous step's output,
+      # or literal strings for fixed values.
+      topic: "{{context.theme}}"
+    output: "outputs/{{workflow}}-{{date}}/step-one.md"
+    # condition: "{{context.some_field != null}}"  # Skip step if condition is false
+
+  - id: step-two
+    skill: another-skill
+    inputs:
+      source: "{{steps.step-one.output}}"
+    output: "outputs/{{workflow}}-{{date}}/step-two.md"
+
+# After each step, Claude saves a checkpoint to outputs/.checkpoint.md
+# recording which steps are done and where their outputs are.
+# If the session times out, point Claude at the checkpoint to resume.

@@ -1,0 +1,21 @@
+# Workspace-specific files
+CLAUDE.md
+.mcp.json
+
+# Company profiles (users create their own — don't commit)
+companies/*
+!companies/_template/
+!companies/_template/**
+
+# Generated outputs
+outputs/
+
+# macOS
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
+
+# Claude memory
+.claude/
