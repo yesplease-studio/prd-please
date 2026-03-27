@@ -163,6 +163,41 @@ In escalation cases, the validator does **not** issue a verdict. It presents the
 
 ---
 
+## Beyond PRD Compliance
+
+This skill checks whether implementation satisfies the requirements, acceptance criteria, and guardrails in the Strategic PRD. It is **not** a substitute for a full QA process. Two areas that commonly come up:
+
+### UI and visual testing
+
+PRD compliance for design requirements (e.g. `DES-01: Chart builder is usable by someone who has never written SQL`) can be partially verified by checking that the relevant components exist and follow spec — but visual correctness, layout fidelity, and interaction quality require separate tools.
+
+**Recommended approach:**
+- For visual regression testing, use a tool like Playwright (screenshot diffs) or Chromatic (Storybook-based).
+- For accessibility validation (WCAG compliance), use axe-core or Lighthouse as part of CI.
+- Claude Code with browser access can run basic interaction walkthroughs when given a running URL.
+
+When a design requirement has an acceptance criterion that cannot be verified programmatically (e.g. "3/5 non-technical participants can complete the flow in under 3 minutes"), this skill will flag it as **cannot verify automatically** rather than marking it as PASS or FAIL. Human or usability testing is required for those criteria.
+
+### Automated test suite execution
+
+This skill reads code to check PRD compliance — it does not run test suites. Test execution (unit, integration, e2e) is a separate step and should happen before or alongside validation.
+
+**Recommended chain:**
+```
+Build
+  → Run test suite (pytest / jest / playwright / etc.)
+  → prd-validator (compliance against PRD requirements)
+  → Ship if both pass
+```
+
+If a test suite exists and is passing but the PRD validator still flags violations, it means the tests don't cover all PRD acceptance criteria. That gap is itself a finding worth capturing via `prd-learner`.
+
+### When to extend the validation chain
+
+If your PRD has requirements that need specialized verification beyond code reading (load testing, security scanning, accessibility audits), add those as explicit steps in the workflow YAML before or after `prd-validator`. The validator's compliance report is designed to be one input in a broader pre-ship checklist, not the entire checklist.
+
+---
+
 ## Token Optimization
 
 - **Sub-agents on Haiku.** The orchestrator (this skill) runs on a frontier model to handle parsing, routing, and aggregation. The actual file-by-file checking runs on the cheapest model that can follow a checklist.

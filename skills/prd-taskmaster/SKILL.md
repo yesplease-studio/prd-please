@@ -73,7 +73,7 @@ dependencies:
 requirements:                      # Specific requirement IDs this task fulfills
   - TECH-01
   - TECH-02
-  - FR-03
+  - PR-03
 user_stories:
   - US-01
   - US-04
@@ -188,6 +188,33 @@ Tasks updated after PRD-001 amendment:
 - T-005: New guardrail applied (DON'T expose stack traces).
 - T-008: NEW task created for FR-12 (new requirement added to PRD).
 ```
+
+---
+
+## External Backlog Integration
+
+Task definitions produced by this skill are **deliberately tool-agnostic** — they are structured YAML/Markdown designed to be readable by humans and machines alike. This makes them straightforward to push into any project management system.
+
+### Recommended integration patterns
+
+**Via MCP (recommended):** When working in Claude Code or another MCP-capable agent environment, use the relevant MCP server (Linear, JIRA, GitHub Issues, etc.) to send task definitions directly to your team's backlog after this skill produces them. The task definition fields map naturally:
+
+| Task context field | Linear | JIRA | GitHub Issues |
+|---|---|---|---|
+| `title` | Issue title | Summary | Title |
+| `description` + `acceptance_criteria` | Description | Description | Body |
+| `priority` (`must`/`should`/`may`) | Priority | Priority | Labels |
+| `estimated_effort` | Estimate | Story points | Labels |
+| `dependencies` | Blocked by | Linked issues | Linked PRs |
+| `requirements` | References | References | Body reference |
+
+**Via agent instruction:** After this skill produces the task backlog, instruct your agent: *"Take these task definitions and create them in [Linear/JIRA/GitHub] using the MCP server."* The structured output is designed for this — no reformatting needed.
+
+**Manual copy:** For teams without MCP integration, the task definitions and execution view are copy-paste ready for any kanban tool.
+
+### What this skill does NOT do
+
+This skill does not push tasks to any external system directly. It produces the artifact; the agent or human decides where it goes. This keeps the PRD system platform-agnostic — the same output works for Linear, JIRA, Notion, a spreadsheet, or a physical board.
 
 ---
 

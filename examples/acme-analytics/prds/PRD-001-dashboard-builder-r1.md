@@ -148,13 +148,13 @@ Dashboards store configuration, not cached results. Every load executes fresh qu
 
 | ID | Severity | Requirement | Acceptance Criteria | Phase |
 |----|----------|-------------|---------------------|-------|
-| PROD-01 | must | Dashboard canvas supports grid-based layout with drag, resize, and reorder of chart widgets | User can place 3 charts, resize one to half-width, and reorder by dragging | R1 |
-| PROD-02 | must | Chart builder offers visual configuration: metric selection, dimension selection, filter builder, date range picker, and chart type selector | A user with no SQL knowledge can create a line chart of DAU filtered by country in under 2 minutes | R1 |
-| PROD-03 | must | Metrics Library displays all defined metrics with name, description, and verified/unverified badge | Data engineer can create a metric; PM sees it in the builder with correct metadata | R1 |
-| PROD-04 | must | Dashboards are shareable via unique URL with three permission levels: owner, editor, viewer | Owner shares link; viewer can see charts but not edit; editor can modify charts | R1 |
-| PROD-05 | must | Every chart has a "View SQL" toggle showing the generated query | Clicking "View SQL" on any chart shows syntactically valid SQL matching the visual configuration | R1 |
-| PROD-06 | should | Users can duplicate an existing dashboard | Clicking "Duplicate" creates a copy with "(Copy)" appended to the title, owned by the duplicating user | R1 |
-| PROD-07 | should | Dashboard supports auto-refresh intervals (5m, 15m, 30m, 1h) for live monitoring | User selects 15m refresh; dashboard re-executes queries every 15 minutes without page reload | R1 |
+| PR-01 | must | Dashboard canvas supports grid-based layout with drag, resize, and reorder of chart widgets | User can place 3 charts, resize one to half-width, and reorder by dragging | R1 |
+| PR-02 | must | Chart builder offers visual configuration: metric selection, dimension selection, filter builder, date range picker, and chart type selector | A user with no SQL knowledge can create a line chart of DAU filtered by country in under 2 minutes | R1 |
+| PR-03 | must | Metrics Library displays all defined metrics with name, description, and verified/unverified badge | Data engineer can create a metric; PM sees it in the builder with correct metadata | R1 |
+| PR-04 | must | Dashboards are shareable via unique URL with three permission levels: owner, editor, viewer | Owner shares link; viewer can see charts but not edit; editor can modify charts | R1 |
+| PR-05 | must | Every chart has a "View SQL" toggle showing the generated query | Clicking "View SQL" on any chart shows syntactically valid SQL matching the visual configuration | R1 |
+| PR-06 | should | Users can duplicate an existing dashboard | Clicking "Duplicate" creates a copy with "(Copy)" appended to the title, owned by the duplicating user | R1 |
+| PR-07 | should | Dashboard supports auto-refresh intervals (5m, 15m, 30m, 1h) for live monitoring | User selects 15m refresh; dashboard re-executes queries every 15 minutes without page reload | R1 |
 
 ### 5.2 Tech
 
@@ -253,6 +253,6 @@ Dashboards store configuration, not cached results. Every load executes fresh qu
 **Classification:** Tightened requirement.
 
 **Changes applied:**
-- Tightened PROD-03: Metric definitions now require a plain-language description (mandatory) and an example value with context (e.g., "Typical range: 20-40% for B2B SaaS"). SQL is shown but collapsed by default.
+- Tightened PR-03: Metric definitions now require a plain-language description (mandatory) and an example value with context (e.g., "Typical range: 20-40% for B2B SaaS"). SQL is shown but collapsed by default.
 
 **Why this matters:** The Metrics Library is the bridge between data engineers and PMs. If PMs can't understand what a metric means without reading SQL, the self-serve goal fails.

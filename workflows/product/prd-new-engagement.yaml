@@ -1,20 +1,36 @@
 name: prd-new-engagement
 description: |
-  New client engagement — author a Strategic PRD, get human approval,
-  then decompose into executable tasks and a client-facing view.
-  This workflow is interactive: it requires human input during authoring
-  and an approval gate before task generation.
+  New client engagement — run structured discovery (optional), author a Strategic PRD,
+  get human approval, then decompose into executable tasks and a client-facing view.
+  This workflow is interactive: it requires human input throughout and an approval
+  gate before tasks are generated.
 
 company: active
 context_files:
   - companies/{{company}}/COMPANY.md
 
 steps:
+  - id: run-discovery
+    skill: prd-discovery
+    inputs:
+      # Provide any combination of source material:
+      # transcript: "{{context.transcript}}"
+      # client_docs: "{{context.client_docs}}"
+      # brief_url: "{{context.brief_url}}"
+    output: "outputs/{{workflow}}-{{date}}/discovery-brief.md"
+    notes: |
+      Optional but recommended when input material is thin or one-sided.
+      prd-discovery works conversationally across 4 phases: collect context →
+      domain interview → produce Discovery Brief → present and hand off.
+      The Discovery Brief is passed as primary input to prd-author.
+      Skip this step by removing it and passing source material directly to prd-author.
+
   - id: author-prd
     skill: prd-author
     inputs:
       mode: create
-      # Provide any combination of source material:
+      discovery_brief: "{{steps.run-discovery.output}}"
+      # Additional source material if discovery was skipped or supplemented:
       # transcript: "{{context.transcript}}"
       # client_docs: "{{context.client_docs}}"
       # existing_prds: "{{context.existing_prds}}"
@@ -22,6 +38,9 @@ steps:
     notes: |
       Interactive step. prd-author works conversationally in 5 phases:
       gather input → interview → outline → author → present.
+      When a Discovery Brief is provided, prd-author uses it as its primary
+      input and focuses Phase 2 on confirming inferences and resolving gaps —
+      not re-interviewing domains already covered in discovery.
       The PRD is saved with status: draft.
 
   - id: human-approval
@@ -42,4 +61,6 @@ steps:
     notes: |
       Decomposes the active PRD into buildable tasks.
       Produces task definitions (agent-facing) and execution view (client-facing).
-      Present to human for final approval before tasks go to kanban.
+      Present to human for final approval before tasks go to backlog.
+      To push tasks to Linear, JIRA, or GitHub Issues: use the relevant MCP server
+      after this step completes, or instruct the agent to do so using the task output.
