@@ -53,6 +53,8 @@ Structured context files (product, users, constraints) that skills load before e
 
 ## How it connects
 
+### Within Systems Please
+
 ```
 CLAUDE.md (per-workspace)
     ↓ sets active company
@@ -64,6 +66,28 @@ systems/prd/SYSTEM.md
     ↓ composed into
 workflows/<workflow>.yaml
 ```
+
+### Full toolchain (PRD → governance → build)
+
+```
+prd-discovery    Surface what's known, inferred, and unknown before authoring
+    ↓
+prd-author       Translate human intent into a structured Strategic PRD
+    ↓
+prd-taskmaster   Derive executable tasks — flags TECH requirements as ADR candidates
+    ↓
+archgate create  Codify architectural decisions as ADRs (.archgate/adrs/)   [Archgate]
+    ↓
+Al Dente         Phased SaaS build — tasks from prd-taskmaster drive each phase
+    ↓
+archgate check   Enforce ADRs in CI — blocks merges on architectural violations [Archgate]
+    ↓
+prd-validator    Validate implementation against PRD requirements
+    ↓
+prd-learner      Capture learnings — propose amendments back to the Strategic PRD
+```
+
+Systems Please handles the *specification* layer (authoring, task derivation, validation, learning). [Archgate](https://github.com/archgate/cli) handles the *governance* layer (architectural decisions as enforceable rules). [Al Dente](https://github.com/aline-no/aldente) handles the *build* layer (phased SaaS implementation).
 
 ## Setup paths
 
@@ -80,6 +104,43 @@ Combine Systems Please with [Al Dente](https://github.com/aline-no/aldente) for 
 3. Use the combined workflow: run `/prd-aldente-quickstart` to author a PRD with Al Dente's default stack (React + Vite + Tailwind + Supabase + Stripe), translate it into Al Dente's build docs, and generate your task backlog — all in one flow.
 
 You can start with Path A and add Al Dente later. The `prd-to-aldente` skill can translate any existing PRD into Al Dente docs at any time.
+
+### Path C: PRD + Archgate (architecture governance)
+
+Add [Archgate](https://github.com/archgate/cli) to enforce architectural decisions made during PRD work throughout implementation.
+
+Systems Please defines *what to build* and *what constraints apply*. Archgate turns technical constraints and architectural decisions into ADRs — machine-checkable rules that run in CI and feed live context to AI coding agents.
+
+1. Follow the quick start below to set up Systems Please.
+2. Install Archgate: `npm install -g archgate` (or `bun install -g archgate`)
+3. Initialize in your project directory: `archgate init`
+4. When `prd-taskmaster` flags requirements as ADR candidates (see [PRD → ADR](#prd--adr-bridge) below), create companion ADRs in `.archgate/adrs/`.
+5. Wire `archgate check` into CI to enforce decisions automatically.
+
+Paths B and C compose: use Systems Please + Archgate + Al Dente together for the full pipeline from requirements to governed SaaS implementation.
+
+```
+PRD authoring (Systems Please)
+    ↓
+Architecture governance (Archgate)   ← codify TECH-domain decisions as ADRs
+    ↓
+Build (Al Dente)                      ← ADR rules enforce decisions in CI
+```
+
+### PRD → ADR bridge
+
+Not every TECH-domain requirement needs an ADR. The signal is whether a decision is durable, has downstream consequences, and needs to be enforced — not just documented.
+
+`prd-taskmaster` flags requirements that meet this threshold when deriving tasks. Look for the `adr_candidate: true` flag in task definitions. When you see it:
+
+1. Run `archgate create` to start a new ADR.
+2. Fill in the Context (why the decision matters), Decision (what was decided), and Do's and Don'ts from the PRD requirement.
+3. Optionally add a companion `.rules.ts` file to make the decision machine-checkable.
+
+A requirement worth an ADR typically has one or more of these properties:
+- Constrains a structural or cross-cutting concern (auth pattern, data model, API conventions, dependency choices)
+- Would be expensive to reverse mid-build
+- Is likely to be violated accidentally by an AI agent without explicit enforcement
 
 ---
 

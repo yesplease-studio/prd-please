@@ -358,7 +358,43 @@ prd-validator skill
 
 ---
 
-## 8. Design Principles
+## 8. Companion Tools
+
+### 8.1 Al Dente (SaaS build workflow)
+
+[Al Dente](https://github.com/aline-no/aldente) is the phased SaaS build workflow that consumes Systems Please output. The `prd-to-aldente` skill translates a Strategic PRD into Al Dente build documentation. Tasks derived by `prd-taskmaster` drive each Al Dente phase.
+
+Relationship: Systems Please defines *what to build*. Al Dente defines *how to build it*.
+
+### 8.2 Archgate (architecture governance)
+
+[Archgate](https://github.com/archgate/cli) turns Architecture Decision Records (ADRs) into an enforceable governance layer. ADRs stored in `.archgate/adrs/` can have companion `.rules.ts` files that run automated checks via `archgate check` in CI. Archgate also feeds live ADR context to AI coding agents via its MCP server.
+
+**Where the PRD system hands off to Archgate:** after task derivation, before implementation begins. TECH-domain requirements with architectural implications should be codified as ADRs rather than left as PRD text that AI agents may not reliably respect during building.
+
+**How to identify ADR candidates from a PRD:** a requirement warrants an ADR when it:
+- Constrains a structural or cross-cutting concern (auth pattern, data model shape, API conventions, dependency policy)
+- Would be expensive to reverse mid-build
+- Is likely to be violated accidentally by an AI agent without explicit enforcement
+
+`prd-taskmaster` flags these requirements with `adr_candidate: true` in derived task definitions. See the Archgate README for ADR format and `.rules.ts` conventions.
+
+**Full toolchain sequence:**
+
+```
+PRD authoring       prd-author (Systems Please)
+Task derivation     prd-taskmaster (Systems Please)
+ADR creation        archgate create (Archgate)        ← TECH-domain requirements → ADRs
+Build               Al Dente phases
+ADR enforcement     archgate check in CI              ← architectural decisions enforced
+Validation          prd-validator (Systems Please)
+Learning            prd-learner (Systems Please)
+```
+
+---
+
+## 9. Design Principles
+
 
 1. **One source of truth.** The Strategic PRD is the single authoritative artifact. Everything else is derived from it.
 2. **Humans decide, AI executes.** Humans provide vision, context, and approval. AI handles authoring, decomposition, validation, and learning capture.

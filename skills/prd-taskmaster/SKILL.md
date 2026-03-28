@@ -91,7 +91,20 @@ guardrails:                        # Only the guardrails relevant to this task
     - "DON'T expose internal error details in API responses."
 relevant_learnings:                # Any learning entries that affect this task
   - L-001: "Rate limiting must be applied to auth endpoints (added after brute force incident)."
+adr_candidate: false               # true if this task contains requirements that warrant an ADR
+adr_note: ""                       # if adr_candidate: true, briefly describe what the ADR should cover
 ```
+
+**ADR candidate detection:** when generating task definitions, set `adr_candidate: true` and populate `adr_note` if the task contains TECH-domain requirements that meet one or more of these criteria:
+- Constrains a structural or cross-cutting concern (auth pattern, data model shape, API conventions, dependency policy, error handling strategy)
+- Would be expensive to reverse mid-build
+- Is likely to be violated accidentally by an AI agent without explicit enforcement
+
+Typical ADR candidates: auth mechanism choice, ORM/query pattern, API versioning strategy, session management approach, file structure conventions, third-party service selection with lock-in implications.
+
+Typical non-candidates: implementation details within an already-decided framework, UI component choices, copy or styling decisions.
+
+When `adr_candidate: true` tasks are present in the backlog, note them in the Step 5 summary: "X task(s) flagged as ADR candidates — consider creating ADRs in `.archgate/adrs/` before building begins." This is advisory — the human decides whether to create ADRs.
 
 ### Step 4: Generate Execution View (Client-Facing)
 
@@ -120,6 +133,7 @@ Show the human the complete task backlog:
 - Execution view summaries.
 - Any requirements that couldn't be cleanly decomposed (flag for discussion).
 - Any open questions (`OQ-XX`) that block specific tasks.
+- If any tasks have `adr_candidate: true`: note them with a brief summary — "Before building begins, consider creating ADRs for: [list with adr_note for each]."
 
 Wait for approval before tasks go to the kanban.
 
