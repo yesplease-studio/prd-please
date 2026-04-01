@@ -1,6 +1,6 @@
 # {{COMPANY_NAME}} — Product Requirements System
 
-A structured Claude Code workspace for writing, decomposing, validating, and learning from product requirements. Powered by [Systems Please](https://github.com/ericsteinbeldring/systems-please).
+A structured Claude Code workspace for writing, decomposing, validating, and learning from product requirements. Powered by [PRD Please](https://github.com/yesplease-studio/prd-please).
 
 ## Quick start
 

@@ -1,4 +1,4 @@
-# Systems Please
+# PRD Please
 
 Always use and write in American English.
 
@@ -9,7 +9,7 @@ profile: companies/{{COMPANY_NAME}}/COMPANY.md
 
 ## How this system works
 
-This is the Systems Please operating system. It contains methodology definitions (systems), executable workflows (skills), company profiles (companies), and composed sequences (workflows).
+This is the PRD Please system. It contains the PRD system definition (systems/prd/), executable workflows (skills), company profiles (companies), and composed sequences (workflows).
 
 ### Directory layout
 

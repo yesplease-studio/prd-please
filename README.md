@@ -1,8 +1,10 @@
-# Systems Please
+# PRD Please
 
-A codified methodology for AI-native product work. Systems, skills, and workflows that turn messy human context into structured, executable specifications — designed for [Claude Code](https://docs.anthropic.com/en/docs/claude-code).
+A structured methodology for AI-native product requirements. Write, decompose, validate, and learn from Strategic PRDs — designed for [Claude Code](https://docs.anthropic.com/en/docs/claude-code).
 
 Built and maintained by [Yes Please Studio](https://yesplease.studio).
+
+*Previously known as `systems-please`.*
 
 ---
 
@@ -10,15 +12,13 @@ Built and maintained by [Yes Please Studio](https://yesplease.studio).
 
 AI coding agents are powerful, but they produce inconsistent results without structured requirements. "Build me an app" gets you an app — just not the one you needed. The gap isn't intelligence, it's specification.
 
-Systems Please fills that gap. It gives you a repeatable methodology for translating human intent into artifacts that AI agents can execute reliably — and a learning loop that makes each engagement better than the last.
+PRD Please fills that gap. It gives you a repeatable methodology for translating human intent into artifacts that AI agents can execute reliably — and a learning loop that makes each engagement better than the last.
 
 ## What's included
 
-### PRD System
+### PRD system
 
-The core of Systems Please. A methodology for writing, structuring, and evolving product requirements so that AI agents can reliably scope, build, validate, and learn from them.
-
-It solves three problems:
+A structured approach to writing, evolving, and acting on product requirements. It solves three problems:
 
 1. **Distillation.** Converts unstructured human context into a precise, structured source of truth (the Strategic PRD).
 2. **Operationalization.** Derives executable tasks from the source of truth so building can begin within hours, not days.
@@ -53,7 +53,7 @@ Structured context files (product, users, constraints) that skills load before e
 
 ## How it connects
 
-### Within Systems Please
+### Within PRD Please
 
 ```
 CLAUDE.md (per-workspace)
@@ -87,19 +87,19 @@ prd-validator    Validate implementation against PRD requirements
 prd-learner      Capture learnings — propose amendments back to the Strategic PRD
 ```
 
-Systems Please handles the *specification* layer (authoring, task derivation, validation, learning). [Archgate](https://github.com/archgate/cli) handles the *governance* layer (architectural decisions as enforceable rules). [Al Dente](https://github.com/aline-no/aldente) handles the *build* layer (phased SaaS implementation).
+PRD Please handles the *specification* layer (authoring, task derivation, validation, learning). [Archgate](https://github.com/archgate/cli) handles the *governance* layer (architectural decisions as enforceable rules). [Al Dente](https://github.com/aline-no/aldente) handles the *build* layer (phased SaaS implementation).
 
 ## Setup paths
 
-### Path A: Standalone (PRD system only)
+### Path A: Standalone (PRD only)
 
-Use the PRD system on its own for any product or project. No build system dependency. Follow the quick start below.
+Use the PRD methodology on its own for any product or project. No build system dependency. Follow the quick start below.
 
 ### Path B: PRD + Al Dente (SaaS build integration)
 
-Combine Systems Please with [Al Dente](https://github.com/aline-no/aldente) for a full pipeline from requirements to SaaS implementation. Systems Please handles *what to build*; Al Dente handles *how to build it*.
+Combine PRD Please with [Al Dente](https://github.com/aline-no/aldente) for a full pipeline from requirements to SaaS implementation. PRD Please handles *what to build*; Al Dente handles *how to build it*.
 
-1. Follow the quick start below to set up Systems Please.
+1. Follow the quick start below to set up PRD Please.
 2. Clone Al Dente alongside: `git clone https://github.com/aline-no/aldente.git`
 3. Use the combined workflow: run `/prd-aldente-quickstart` to author a PRD with Al Dente's default stack (React + Vite + Tailwind + Supabase + Stripe), translate it into Al Dente's build docs, and generate your task backlog — all in one flow.
 
@@ -109,18 +109,18 @@ You can start with Path A and add Al Dente later. The `prd-to-aldente` skill can
 
 Add [Archgate](https://github.com/archgate/cli) to enforce architectural decisions made during PRD work throughout implementation.
 
-Systems Please defines *what to build* and *what constraints apply*. Archgate turns technical constraints and architectural decisions into ADRs — machine-checkable rules that run in CI and feed live context to AI coding agents.
+PRD Please defines *what to build* and *what constraints apply*. Archgate turns technical constraints and architectural decisions into ADRs — machine-checkable rules that run in CI and feed live context to AI coding agents.
 
-1. Follow the quick start below to set up Systems Please.
+1. Follow the quick start below to set up PRD Please.
 2. Install Archgate: `npm install -g archgate` (or `bun install -g archgate`)
 3. Initialize in your project directory: `archgate init`
 4. When `prd-taskmaster` flags requirements as ADR candidates (see [PRD → ADR](#prd--adr-bridge) below), create companion ADRs in `.archgate/adrs/`.
 5. Wire `archgate check` into CI to enforce decisions automatically.
 
-Paths B and C compose: use Systems Please + Archgate + Al Dente together for the full pipeline from requirements to governed SaaS implementation.
+Paths B and C compose: use PRD Please + Archgate + Al Dente together for the full pipeline from requirements to governed SaaS implementation.
 
 ```
-PRD authoring (Systems Please)
+PRD authoring (PRD Please)
     ↓
 Architecture governance (Archgate)   ← codify TECH-domain decisions as ADRs
     ↓
@@ -149,8 +149,8 @@ A requirement worth an ADR typically has one or more of these properties:
 ### 1. Clone the repo
 
 ```bash
-git clone https://github.com/ericsteinbeldring/systems-please.git
-cd systems-please
+git clone https://github.com/yesplease-studio/prd-please.git
+cd prd-please
 ```
 
 ### 2. Set up your company profile
@@ -233,4 +233,4 @@ Apache 2.0 — see [LICENSE](LICENSE). Attribution required.
 
 ---
 
-*Systems Please is created and maintained by [Eric Stein-Beldring](https://linkedin.com/in/ericsteinbeldring) at [Yes Please Studio](https://yesplease.studio).*
+*PRD Please is created and maintained by [Eric Stein-Beldring](https://linkedin.com/in/ericsteinbeldring) at [Yes Please Studio](https://yesplease.studio).*
