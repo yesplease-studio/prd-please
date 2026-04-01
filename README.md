@@ -1,10 +1,10 @@
+<img width="1584" height="396" alt="Github-prd-please" src="https://github.com/user-attachments/assets/130bfce9-a0c2-42ee-82e3-24de7287f7ea" />
+
 # PRD Please
 
 A structured methodology for AI-native product requirements. Write, decompose, validate, and learn from Strategic PRDs — designed for [Claude Code](https://docs.anthropic.com/en/docs/claude-code).
 
 Built and maintained by [Yes Please Studio](https://yesplease.studio).
-
-*Previously known as `systems-please`.*
 
 ---
 
