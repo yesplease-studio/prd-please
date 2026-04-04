@@ -233,4 +233,18 @@ Apache 2.0 — see [LICENSE](LICENSE). Attribution required.
 
 ---
 
+## The "-please" family
+
+Open-source, AI-native tools for strategic and product work by [Yes Please Studio](https://yesplease.studio):
+
+| Tool | What it does |
+|------|-------------|
+| **[strategy-please](https://github.com/yesplease-studio/strategy-please)** | Maps challenges to the right workshop using a strategic maturity framework |
+| **prd-please** (this repo) | Structured methodology for AI-native product requirements |
+| **[sales-please](https://github.com/yesplease-studio/sales-please)** | Lightweight deal qualification framework built on WORTH |
+
+Each tool works standalone. Fork it, open Claude Code, start working.
+
+---
+
 *PRD Please is created and maintained by [Eric Stein-Beldring](https://linkedin.com/in/ericsteinbeldring) at [Yes Please Studio](https://yesplease.studio).*
