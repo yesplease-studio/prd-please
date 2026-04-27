@@ -46,6 +46,11 @@ created_at: [YYYY-MM-DD]
 
 [Stack, infrastructure, third-party dependencies, compliance needs.]
 
+### Never mention publicly
+
+[Sensitive context that should not surface in PRD outputs, user-facing copy, or
+artifacts shared outside the team. Hard exclusion list for skills.]
+
 
 ## Users
 
@@ -55,6 +60,9 @@ created_at: [YYYY-MM-DD]
 - **The problem they feel:** [Specific pain, in their words]
 - **What they're doing about it today:** [Current tools, workarounds]
 - **What makes them look for a solution:** [Buying triggers]
+- **Language they use:** [Verbatim phrases this segment uses]
+- **Where they spend time:** [Channels, communities, platforms]
+- **Hook:** [One sentence that would make them stop scrolling]
 
 ### Secondary: [User segment name]
 
@@ -68,6 +76,7 @@ created_at: [YYYY-MM-DD]
 - **What they offer:** [Brief — their positioning, not yours]
 - **Where they're strong:** [Honest assessment]
 - **Where we differentiate:** [Specific, factual differences]
+- **Talk track:** [How to position against them when differentiation matters in product copy]
 
 ### [Competitor 2 name]
 

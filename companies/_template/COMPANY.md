@@ -42,6 +42,13 @@ scope appropriately and avoid duplicating existing work.]
 [Known technical constraints that PRDs should account for: stack, infrastructure,
 third-party dependencies, performance requirements, compliance needs.]
 
+### Never mention publicly
+
+[Sensitive context that should not surface in PRD outputs, user-facing copy, or
+artifacts shared outside the team. Examples: in-progress audits, partner names
+under NDA, internal pricing thresholds, deprecated capabilities you don't want
+re-introduced. Skills treat this section as a hard exclusion list.]
+
 
 ## Users
 
@@ -51,6 +58,9 @@ third-party dependencies, performance requirements, compliance needs.]
 - **The problem they feel:** [Specific pain, in their words — not your framing]
 - **What they're doing about it today:** [Current tools, workarounds, manual processes]
 - **What makes them look for a solution:** [Buying triggers — events that create urgency]
+- **Language they use:** [Actual phrases this segment uses, verbatim where possible. Lets PRDs and product copy speak in the user's words instead of inventing one.]
+- **Where they spend time:** [Channels, communities, platforms. Useful for PRDs touching onboarding, distribution, or growth surfaces.]
+- **Hook:** [One sentence that would make this segment stop scrolling.]
 
 ### Secondary: [User segment name]
 
@@ -64,6 +74,7 @@ third-party dependencies, performance requirements, compliance needs.]
 - **What they offer:** [Brief — their positioning, not yours]
 - **Where they're strong:** [Honest assessment]
 - **Where we differentiate:** [Specific, factual differences — not "we're better"]
+- **Talk track:** [How to position against them when the difference matters in product copy or feature framing. Helps PRDs articulate differentiation without resorting to vague claims.]
 
 ### [Competitor 2 name]
 

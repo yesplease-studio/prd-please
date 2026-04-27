@@ -30,6 +30,7 @@ Executable single-step workflows. Each has a `SKILL.md` that Claude reads before
 
 | Skill | What it does |
 |-------|-------------|
+| `prd-onboard` | Set up prd-please for your company. Walks the COMPANY.md schema interactively, supports an in-repo profile or an external pointer, refers you to sibling please-family tools when a question is upstream of PRD scope |
 | `prd-discovery` | Run a structured pre-authoring interview to surface what is known, inferred, and unknown before writing a PRD |
 | `prd-author` | Create and edit Strategic PRDs from human-provided context |
 | `prd-taskmaster` | Derive executable tasks and client-facing views from a Strategic PRD |
@@ -154,30 +155,24 @@ git clone https://github.com/yesplease-studio/prd-please.git
 cd prd-please
 ```
 
-### 2. Set up your company profile
+### 2. Run onboarding
 
-```bash
-cp -R companies/_template companies/your-company
+Open Claude Code in the repo directory and run:
+
+```
+/prd-onboard
 ```
 
-Edit `companies/your-company/COMPANY.md` with your product context. The template has detailed guidance for each section.
+`prd-onboard` walks you through the COMPANY.md schema section by section, sets up `CLAUDE.md`, and refers you to sibling please-family tools when a question is upstream of PRD scope (e.g. ICP definition, voice rules). It supports two patterns:
 
-### 3. Configure your workspace
+- **In-repo COMPANY.md** — the default. Creates `companies/<your-company>/COMPANY.md` from the template and walks you through populating it.
+- **External pointer** — for users who already maintain company context in a private internal repo or vault. Points `CLAUDE.md` at that file instead of duplicating it.
 
-```bash
-cp CLAUDE.md.template CLAUDE.md
-```
+You can also set up manually if you prefer: copy `companies/_template/` to `companies/<your-company>/`, edit the COMPANY.md, then copy `CLAUDE.md.template` to `CLAUDE.md` and set the `company:` and `profile:` fields. The schema is documented in [docs/company-schema.md](docs/company-schema.md).
 
-Edit `CLAUDE.md` to set your active company:
+### 3. Start using skills
 
-```yaml
-company: your-company
-profile: companies/your-company/COMPANY.md
-```
-
-### 4. Start using skills
-
-Open Claude Code in the repo directory and use skills directly:
+Once onboarding is complete, use skills directly:
 
 ```
 /prd-discovery       Run a pre-authoring interview before writing a new PRD
@@ -206,6 +201,7 @@ systems/           Methodology definitions
   prd/               PRD system
 
 skills/            Executable workflows (one SKILL.md each)
+  prd-onboard/       Interactive setup — populates COMPANY.md and wires CLAUDE.md
   prd-discovery/     Pre-authoring interview — produces a Discovery Brief
   prd-author/        Create and edit Strategic PRDs
   prd-taskmaster/    Derive tasks from PRDs
