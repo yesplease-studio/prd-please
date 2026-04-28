@@ -30,6 +30,12 @@ Takes an existing Strategic PRD and applies targeted changes. Preserves unchange
 
 ## Create Mode Workflow
 
+**Mode detection:** Before Phase 1, check whether `playbook.md` exists at the project root and has at least one entry.
+
+- No `playbook.md` or file is empty: **teach mode** -- show rationale inline on every question, announce the companion doc when it generates.
+- `playbook.md` has entries: **standard mode** -- tight questions, rationale available on request, companion doc generated without announcement.
+- User declares "expert" in conversation: **expert mode** -- no inline teaching, companion doc generated silently, playbook appended without narration.
+
 ### Phase 1: Gather and Assess Input
 
 **Collect all available source material:**
@@ -54,12 +60,21 @@ If critical gaps exist, surface them in Phase 2 rather than guessing.
 
 Use `AskUserQuestion` to fill gaps and confirm direction. Batch questions into 2-4 per call. Adapt based on what's missing from Phase 1.
 
+**Teach-through-choice:** Every question follows the three-things format: the question, a one-line rationale ("why we ask"), and optionally 2-3 representative answers so the user learns what good sounds like by contrast. In standard mode, skip representative examples unless the user seems unsure. In expert mode, skip rationale unless asked.
+
 **Standard questions (adapt, don't ask verbatim):**
 
-- What is the single most important outcome for this product/feature? (Clarifies priority)
-- Who are the primary users, and what's their technical sophistication? (Shapes UX requirements)
-- What's the timeline and what must ship in the first release vs. later? (Scopes phase boundaries)
-- Are there hard technical, regulatory, or commercial constraints we should know about? (Surfaces non-obvious domains)
+- What is the single most important outcome for this product/feature?
+  *Why we ask:* Forces prioritization before scope locks. Without a primary outcome, every goal becomes equally important and the PRD cannot guide trade-off decisions.
+
+- Who are the primary users, and what's their technical sophistication?
+  *Why we ask:* Sophistication shapes UX requirements, onboarding complexity, and how much guidance the product needs to build in.
+
+- What's the timeline and what must ship in the first release vs. later?
+  *Why we ask:* Phase boundaries prevent everything from being R1. Without a hard line, the PRD becomes a wish list.
+
+- Are there hard technical, regulatory, or commercial constraints we should know about?
+  *Why we ask:* Constraints surface domains. A product handling financial data has compliance requirements; one replacing an internal tool has migration requirements. These rarely surface unless asked directly.
 
 **Domain forcing function:** Based on the input material, identify which domains are likely relevant. If the human hasn't mentioned a domain that seems important (e.g. no data/privacy discussion for a product handling PII), proactively raise it:
 
@@ -97,6 +112,19 @@ Key risks: [1-2 top risks]
 Present this to the human. Wait for approval or redirection before proceeding.
 
 **Why this phase matters:** Writing a full PRD is a significant token investment. Getting alignment on the outline first catches misunderstandings early and avoids expensive rewrites.
+
+### Phase 3.5: Shape-Check the Outline
+
+Before writing the full PRD, assess the outline the human has confirmed. Keep this to 2-4 sentences. Name what is strong. Name what is thin. Do not block -- shape-check is tutoring, not a gate.
+
+What to assess:
+
+- **Problem statement:** Grounded in specific evidence, or generic? ("Users want better reporting" is generic; "users export to CSV because the chart builder doesn't support multi-series comparisons" is specific and buildable.)
+- **Goals:** Tied to a phase and measurable, or at minimum noted explicitly as qualitative?
+- **Non-goals:** At least two named? An outline with no non-goals is a scope risk -- scope expands wherever no boundary is drawn.
+- **Users:** A real segment with a named problem, or an assumed persona built from guesses?
+
+In expert mode: skip this phase. In standard mode: surface only the one or two items that are genuinely thin. In teach mode: run all four checks and name what good would look like.
 
 ### Phase 4: Author the Strategic PRD
 
@@ -146,6 +174,25 @@ Share the draft with the human. Explicitly flag:
 - Any open questions that block implementation.
 
 The PRD status is `draft` until the human approves it. Upon approval, update status to `active`.
+
+### Phase 5.5: Companion Doc and Playbook
+
+After status moves to `active`, generate two artifacts. Do not wait for the human to ask.
+
+**Companion doc:** Create `PRD-XXX-companion.md` in the same directory as the PRD, using `templates/prd-companion.md` as the base. Fill each section with content specific to this session: name the actual moves made, the actual decisions, the actual anti-patterns surfaced. A generic companion doc is useless. The value is in the specificity.
+
+**Playbook entry:** Append one entry to `playbook.md` at the project root. Create the file from `templates/playbook.md` if it does not exist.
+
+```
+## [date] PRD-XXX: [short title]
+Decomposition move: [the most reusable framing or structural decision from this session]
+What to watch for: [one anti-pattern surfaced during authoring]
+```
+
+**Mode behavior:**
+- Teach mode: surface the companion doc actively, mention where it lives, walk through one section to show what it contains.
+- Standard mode: mention that the companion doc was generated and name its path.
+- Expert mode: generate both silently.
 
 ---
 

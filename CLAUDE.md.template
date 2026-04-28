@@ -72,6 +72,30 @@ When running a workflow from `workflows/`:
 - System changes: `prd: <what changed>`
 - Company profile changes: `<company>: <what changed>`
 
+## Learning layer
+
+prd-please skills teach as they produce. Every skill run generates a companion doc alongside its artifact and appends one entry to a growing playbook at the project root.
+
+### Mode selector
+
+Skills detect mode at the start of each run by checking `playbook.md`:
+
+| Condition | Mode | Behavior |
+|---|---|---|
+| No `playbook.md` at project root, or file is empty | teach | Full inline rationale on every question, companion doc announced |
+| `playbook.md` exists with one or more entries | standard | Tight questions, rationale on request, companion doc generated |
+| User declares "expert" in conversation | expert | No inline teaching, companion doc generated silently, playbook accretes |
+
+### Playbook
+
+`playbook.md` lives at the project root. Skills append one entry per run; you own editing and curation. The playbook is how learning compounds across sessions. See `templates/playbook.md` for the entry format.
+
+### Companion docs
+
+Each artifact-producing skill generates a parallel `<artifact>-companion.md` with four sections: Why voice, Why structure, What to reuse, Do-it-yourself. Companion docs are specific to the session -- generic content is useless. See `templates/prd-companion.md`, `templates/taskmaster-companion.md`, and `templates/company-companion.md` for the structure.
+
+---
+
 ## Please family
 
 prd-please is one of four please-family frameworks. When the work points beyond PRD authoring and execution, reach for a sibling.

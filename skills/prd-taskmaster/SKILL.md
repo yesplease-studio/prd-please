@@ -46,6 +46,12 @@ Read the full Strategic PRD. Extract:
 
 Group requirements into **buildable units** — each task should represent work that can be completed and validated independently within 24-48 hours (aligned with InternalOS delivery cadence).
 
+**Shape-check:** When a requirement cluster would produce a task exceeding 48h, surface the split with reasoning before finalizing -- do not just split silently. The reasoning is the teaching.
+
+> "This cluster (TECH-01, TECH-02, TECH-03) maps to roughly 72h. I'd split it into: auth endpoints (T-001, ~24h) and token management (T-002, ~48h). Does that split make sense, or is there a reason to keep them together?"
+
+In expert mode: split without surfacing the reasoning unless the human asks. In standard and teach modes: always name the estimated size and the proposed split before proceeding.
+
 **Decomposition principles:**
 
 - **One task = one deliverable.** A task produces a specific, testable output: an API endpoint, a UI component, a data migration, etc.
@@ -136,6 +142,26 @@ Show the human the complete task backlog:
 - If any tasks have `adr_candidate: true`: note them with a brief summary — "Before building begins, consider creating ADRs for: [list with adr_note for each]."
 
 Wait for approval before tasks go to the kanban.
+
+### Step 6: Companion Doc and Playbook
+
+After the backlog is approved, generate two artifacts. Do not wait for the human to ask.
+
+**Companion doc:** Create `PRD-XXX-taskmaster-companion.md` in the same directory as the task backlog, using `templates/taskmaster-companion.md` as the base. Fill each section with content specific to this decomposition: name the actual grouping decisions, the actual dependency chains, the actual ADR candidates flagged. A companion doc that could apply to any backlog is not useful.
+
+**Playbook entry:** Append one entry to `playbook.md` at the project root. Create the file from `templates/playbook.md` if it does not exist.
+
+```
+## [date] PRD-XXX tasks (Phase [R1/R2/...])
+Decomposition pattern: [how requirements were grouped -- by component, by domain, by dependency order]
+ADR candidates flagged: [yes/no; if yes, what]
+Scope boundary: [one clean line about where the task edges reveal the PRD is thin or strong]
+```
+
+**Mode behavior:**
+- Teach mode: surface the companion doc, mention where it lives, note the decomposition move that will transfer best to future work.
+- Standard mode: mention that the companion doc was generated and name its path.
+- Expert mode: generate both silently.
 
 ---
 

@@ -146,6 +146,17 @@ Then recommend one next move:
 - **Thin or one-sided context (technical-only, founder-only)** → `prd-discovery` first to widen the source material.
 - **ICP marked `[TBD — pending strategy-please]`** → run strategy-please now; resume prd-please when the ICP is sharp.
 
+**Companion doc:** Generate `COMPANY-companion.md` in `companies/<slug>/`, using `templates/company-companion.md` as the base. Fill each section with content specific to this company and this session: name the actual framings that clarified the ICP, the actual fields that were left tentative and why, the actual sections that will be most load-bearing for prd-author. A companion doc that could apply to any company setup is not useful.
+
+**Playbook entry:** Append one entry to `playbook.md` at the project root. Create the file from `templates/playbook.md` if it does not exist. Because this is the user's first encounter with the playbook, include the two-line explanation that precedes the entry format in the template.
+
+```
+## [date] Setup: [company slug]
+This playbook tracks reusable moves from your prd-please sessions. Each skill adds one entry.
+ICP summary: [one line -- who they are and what problem they have]
+Key uncertainty: [what was left TBD and why]
+```
+
 End the skill. Do not chain into the next skill automatically; the user owns that call.
 
 ---
