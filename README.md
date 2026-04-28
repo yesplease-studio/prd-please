@@ -49,6 +49,20 @@ Multi-step skill sequences defined in YAML. They chain skills together with cond
 | `prd-post-build` | Validate, learn, amend, regenerate tasks |
 | `prd-aldente-quickstart` | Author a PRD with Al Dente defaults, translate to build docs, generate tasks |
 
+### Learning layer
+
+prd-please is built to make you better at product specification, not just faster at producing documents. Every skill run does three things beyond generating the artifact:
+
+**Teach-through-choice questions.** Every interview question includes a one-line rationale so you understand why it matters -- not just what to answer. Representative examples show what good looks like by contrast. Over time, you start asking these questions yourself before the skill does.
+
+**Shape-check tutoring.** When you write something the skill can assess -- an outline, a task cluster, a problem statement -- it responds with a brief evaluation before proceeding. "This goal has no metric. Add one or flag it as qualitative -- either is valid, but 'improve the experience' won't tell you when you're done." Tutoring, not linting.
+
+**Companion doc.** Alongside every artifact, the skill generates a `<artifact>-companion.md` with four sections: why the output sounds the way it does, why it is structured this way, which moves are worth reusing, and how to do it yourself next time without the skill.
+
+**Playbook accretion.** Every companion doc contributes one entry to `playbook.md` at your project root. After ten sessions, you have a dozen reusable frames specific to your product and team -- decomposition patterns that worked, scope boundaries you had to learn the hard way, ICP distinctions that made user stories sharper.
+
+The mode selector adjusts verbosity: **teach** (first-time users, full rationale inline), **standard** (returning users, rationale on request), or **expert** (declare it in conversation, companion docs generate silently). Mode is detected automatically from playbook state; no configuration needed.
+
 ### Company profiles
 
 Structured context files (product, users, constraints) that skills load before executing. Your company profile is what makes generic skills produce project-specific output.
@@ -219,6 +233,12 @@ companies/         Company profiles
 examples/          Fictional example engagement
   acme-analytics/    Complete PRD lifecycle demo
 
+templates/         Output templates for companion docs and playbook
+  prd-companion.md       Companion doc for PRD artifacts
+  taskmaster-companion.md  Companion doc for task backlog artifacts
+  company-companion.md   Companion doc for COMPANY.md
+  playbook.md            Playbook entry format
+
 deploy/            Setup templates for new workspaces
 docs/              Architecture and schema reference
 ```
@@ -244,6 +264,7 @@ Open-source, AI-native tools for strategic and product work by [Yes Please Studi
 | **[sales-please](https://github.com/yesplease-studio/sales-please)** | Lightweight deal qualification framework built on WORTH |
 | **[voice-please](https://github.com/yesplease-studio/voice-please)** | Defines, encodes, and maintains a company's voice and language system |
 | **[design-please](https://github.com/yesplease-studio/design-please)** | Scopes design direction and encodes it for Claude Design or designer handoff |
+| **[name-please](https://github.com/yesplease-studio/name-please)** | Validates and generates company and product names grounded in ICP and voice context |
 
 Each tool works standalone. Fork it, open Claude Code, start working.
 
