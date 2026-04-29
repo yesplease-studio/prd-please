@@ -265,6 +265,7 @@ Open-source, AI-native tools for strategic and product work by [Yes Please Studi
 | **[voice-please](https://github.com/yesplease-studio/voice-please)** | Defines, encodes, and maintains a company's voice and language system |
 | **[design-please](https://github.com/yesplease-studio/design-please)** | Scopes design direction and encodes it for Claude Design or designer handoff |
 | **[name-please](https://github.com/yesplease-studio/name-please)** | Validates and generates company and product names grounded in ICP and voice context |
+| **[messaging-please](https://github.com/yesplease-studio/messaging-please)** | Builds messaging architecture -- purpose, positioning, and per-audience message matrix |
 
 Each tool works standalone. Fork it, open Claude Code, start working.
 
