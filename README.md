@@ -92,7 +92,8 @@ prd-author       Translate human intent into a structured Strategic PRD
     ↓
 prd-taskmaster   Derive executable tasks — flags TECH requirements as ADR candidates
     ↓
-archgate create  Codify architectural decisions as ADRs (.archgate/adrs/)   [Archgate]
+archgate adr     Codify architectural decisions as ADRs (.archgate/adrs/)   [Archgate]
+   create/import   — author from scratch, or import a curated pack from the registry
     ↓
 Al Dente         Phased SaaS build — tasks from prd-taskmaster drive each phase
     ↓
@@ -129,9 +130,9 @@ PRD Please defines *what to build* and *what constraints apply*. Archgate turns 
 
 1. Follow the quick start below to set up PRD Please.
 2. Install Archgate: `npm install -g archgate` (or `bun install -g archgate`)
-3. Initialize in your project directory: `archgate init`
-4. When `prd-taskmaster` flags requirements as ADR candidates (see [PRD → ADR](#prd--adr-bridge) below), create companion ADRs in `.archgate/adrs/`.
-5. Wire `archgate check` into CI to enforce decisions automatically.
+3. Initialize in your project directory: `archgate init`. The greenfield wizard detects your stack and offers to import recommended starter packs from the [awesome-adrs registry](https://github.com/archgate/awesome-adrs) — accept the ones that match your stack to skip writing baseline ADRs from scratch.
+4. When `prd-taskmaster` flags requirements as ADR candidates (see [PRD → ADR](#prd--adr-bridge) below), either import a covering pack with `archgate adr import` or author a new ADR in `.archgate/adrs/` with `archgate adr create`.
+5. Wire `archgate check` into CI to enforce decisions automatically. Run `archgate adr sync` periodically to pull updates for any imported packs.
 
 Paths B and C compose: use PRD Please + Archgate + Al Dente together for the full pipeline from requirements to governed SaaS implementation.
 
@@ -149,9 +150,10 @@ Not every TECH-domain requirement needs an ADR. The signal is whether a decision
 
 `prd-taskmaster` flags requirements that meet this threshold when deriving tasks. Look for the `adr_candidate: true` flag in task definitions. When you see it:
 
-1. Run `archgate create` to start a new ADR.
-2. Fill in the Context (why the decision matters), Decision (what was decided), and Do's and Don'ts from the PRD requirement.
-3. Optionally add a companion `.rules.ts` file to make the decision machine-checkable.
+1. Check the [awesome-adrs registry](https://github.com/archgate/awesome-adrs) for a pack that already covers the decision. If one exists, `archgate adr import <pack>` brings it in (IDs are remapped to your project's numbering automatically).
+2. Otherwise, run `archgate adr create` to start a new ADR.
+3. Fill in the Context (why the decision matters), Decision (what was decided), and Do's and Don'ts from the PRD requirement.
+4. Optionally add a companion `.rules.ts` file to make the decision machine-checkable.
 
 A requirement worth an ADR typically has one or more of these properties:
 - Constrains a structural or cross-cutting concern (auth pattern, data model, API conventions, dependency choices)
@@ -245,7 +247,7 @@ docs/              Architecture and schema reference
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on issues, pull requests, and methodology changes.
+See [CONTRIBUTING.md](open-source/please-family/prd-please/CONTRIBUTING.md) for guidelines on issues, pull requests, and methodology changes.
 
 ## License
 

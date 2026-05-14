@@ -110,7 +110,7 @@ Typical ADR candidates: auth mechanism choice, ORM/query pattern, API versioning
 
 Typical non-candidates: implementation details within an already-decided framework, UI component choices, copy or styling decisions.
 
-When `adr_candidate: true` tasks are present in the backlog, note them in the Step 5 summary: "X task(s) flagged as ADR candidates — consider creating ADRs in `.archgate/adrs/` before building begins." This is advisory — the human decides whether to create ADRs.
+When `adr_candidate: true` tasks are present in the backlog, note them in the Step 5 summary: "X task(s) flagged as ADR candidates — before building begins, check `archgate adr import --list` (or the [awesome-adrs registry](https://github.com/archgate/awesome-adrs)) for a covering pack, then `archgate adr create` for anything left uncovered." This is advisory — the human decides whether to create or import ADRs.
 
 ### Step 4: Generate Execution View (Client-Facing)
 

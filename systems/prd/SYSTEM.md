@@ -379,14 +379,17 @@ Relationship: Systems Please defines *what to build*. Al Dente defines *how to b
 
 `prd-taskmaster` flags these requirements with `adr_candidate: true` in derived task definitions. See the Archgate README for ADR format and `.rules.ts` conventions.
 
+**Two paths to an ADR.** A flagged candidate can be satisfied by either authoring a new ADR (`archgate adr create`) or importing one from the [awesome-adrs registry](https://github.com/archgate/awesome-adrs) (`archgate adr import <pack>`). The registry hosts curated packs covering common patterns (TypeScript strict mode, API conventions, security baselines, etc.); imported ADRs have their IDs remapped to the project's domain prefixes automatically. Prefer import when a pack covers the decision — it skips re-authoring well-established conventions. Run `archgate adr sync` periodically to keep imported packs current with upstream changes. `archgate init` runs a greenfield wizard on first use that detects the project stack and recommends starter packs before any ADRs exist.
+
 **Full toolchain sequence:**
 
 ```
 PRD authoring       prd-author (Systems Please)
 Task derivation     prd-taskmaster (Systems Please)
-ADR creation        archgate create (Archgate)        ← TECH-domain requirements → ADRs
+ADR setup           archgate adr create | adr import  ← author from scratch or import from registry
 Build               Al Dente phases
 ADR enforcement     archgate check in CI              ← architectural decisions enforced
+ADR maintenance     archgate adr sync                 ← pull upstream updates for imported packs
 Validation          prd-validator (Systems Please)
 Learning            prd-learner (Systems Please)
 ```
